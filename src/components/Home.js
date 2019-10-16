@@ -1,6 +1,5 @@
 import React from 'react';
 import SearchContainer from '../containers/SearchContainer';
-import RestaurantContainer from '../containers/RestaurantContainer';
 
 const divStyle = {
   height: '100%',
@@ -10,11 +9,10 @@ const divStyle = {
   alignItems: 'center'
 }
 
-const Home = (props) => {
+const Home = () => {
   return (
-    <div style={divStyle}>
-      {/* <SearchContainer /> */}
-      <RestaurantContainer />
+    <div className='home' style={divStyle}>
+      <SearchContainer />
     </div>
   );
 }

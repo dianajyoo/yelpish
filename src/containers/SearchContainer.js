@@ -7,8 +7,8 @@ class SearchContainer extends React.Component {
   state = {
     input: '',
     location: '',
-    latitude: 0,
-    longitude: 0
+    latitude: 40.7128,
+    longitude: 74.0060
   }
 
   componentDidMount() {
@@ -61,6 +61,7 @@ class SearchContainer extends React.Component {
   }
 
   render() {
+    console.log('state', this.state.location)
     return (
       <form onSubmit={this.handleSubmit}>
         <Search onChange={this.handleChange} input={this.state.input} />
