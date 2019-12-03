@@ -10,6 +10,10 @@ const listStyle = {
   listStyleType: 'none'
 }
 
+const imgStyle = {
+  marginRight: 50
+}
+
 const RestaurantCard = ({ restaurant }) => {
   const address = restaurant.venue.location.formattedAddress.map(line => {
     return <li>{line}</li>;
@@ -20,7 +24,7 @@ const RestaurantCard = ({ restaurant }) => {
 
   return (
     <div className='restaurantCard' style={divStyle}>
-      <img src={'https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80'} alt='restaurantImage' />
+      <img src={'https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80'} alt='restaurantImage' style={imgStyle} />
 
       <ul className='restaurantDetails' style={listStyle}>
         <li>{restaurant.venue.name}</li>
