@@ -1,7 +1,7 @@
-import { getUsers, addUser } from './controllers/user';
+import user from '../controllers/user';
 
 export default (app) => {
   app.route('/users')
-    .get(getUsers)
-    .post(addUser)
+    .get(user.getUsers)
+    .post(user.addUser)
 };

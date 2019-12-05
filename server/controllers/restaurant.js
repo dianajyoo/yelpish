@@ -1,7 +1,7 @@
 exports.getRestaurants = (req, res) => {
-  console.log('getRestaurants ' + res)
+  res.json({ message: 'GET restaurant' })
 }
 
 exports.addRestaurant = (req, res) => {
-  console.log('addRestaurant ' + res)
+  res.json({ message: 'POST restaurant' })
 }

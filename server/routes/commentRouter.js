@@ -1,7 +1,7 @@
-import { getComments, addComment } from './controllers/comment';
-
+import comment from '../controllers/comment';
+          
 export default (app) => {
   app.route('/comments')
-    .get(getComments)
-    .post(addComment)
+    .get(comment.getComments)
+    .post(comment.addComment)
 };
