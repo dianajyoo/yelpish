@@ -13,7 +13,7 @@ exports.getRestaurants = (req, res) => {
 exports.getRestaurant = (res, res) => {
   restaurant.findById(req.params.restaurantId, (err, restaurant) => {
     if(err) {
-      res.send(restaurant);
+      res.send(err);
     }
 
     res.json(restaurant);

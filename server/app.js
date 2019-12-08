@@ -8,6 +8,9 @@ import userRouter from './routes/userRouter';
 
 const app = express();
 
+// connect mongoose to mongoDB
+mongoose();
+
 // configure app to use bodyParser() to get data from POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
