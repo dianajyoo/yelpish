@@ -1,7 +1,21 @@
+import restaurant from '../models/restaurant';
+
 exports.getRestaurants = (req, res) => {
-  res.json({ message: 'GET restaurant' })
+  restaurant.find({}, (err, restaurants) => {
+    if(err) {
+      res.send(err);
+    }
+
+    res.json(restaurants);
+  });
 }
 
-exports.addRestaurant = (req, res) => {
-  res.json({ message: 'POST restaurant' })
+exports.getRestaurant = (res, res) => {
+  restaurant.findById(req.params.restaurantId, (err, restaurant) => {
+    if(err) {
+      res.send(restaurant);
+    }
+
+    res.json(restaurant);
+  });
 }
