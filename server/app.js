@@ -1,10 +1,11 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose from './db/mongoose';
 import bodyParser from 'body-parser';
 
 import commentRouter from './routes/commentRouter';
 import restaurantRouter from './routes/restaurantRouter';
 import userRouter from './routes/userRouter';
+import { registerUser, verifyUser } from './routes/authRouter';
 
 const app = express();
 
@@ -18,5 +19,7 @@ app.use(bodyParser.json());
 commentRouter(app);
 restaurantRouter(app);
 userRouter(app);
+registerUser(app);
+verifyUser(app);
 
 export default app;

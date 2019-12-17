@@ -10,7 +10,7 @@ exports.getRestaurants = (req, res) => {
   });
 }
 
-exports.getRestaurant = (res, res) => {
+exports.getRestaurant = (req, res) => {
   restaurant.findById(req.params.restaurantId, (err, restaurant) => {
     if(err) {
       res.send(err);
