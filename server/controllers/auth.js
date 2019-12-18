@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import dotenv from 'dotenv';
 import User from '../models/user';
+
+dotenv.config();
 
 exports.registerUser = (req, res) => {
   const HASHED_PASSWORD = bcrypt.hashSync(req.body.password, 8);
@@ -15,7 +18,7 @@ exports.registerUser = (req, res) => {
       return res.status(500).send('There was a problem with registering user.');
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.REACT_APP_SECRET_KEY, {
+    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
       expiresIn: SECONDS_IN_A_DAY
     });
 
@@ -30,7 +33,7 @@ exports.verifyUser = (req, res) => {
     return res.status(401).send({ auth: false, message: 'No token provided.' });
   }
   
-  jwt.verify(token, process.env.REACT_APP_SECRET_KEY, (err, decoded) => {
+  jwt.verify(TOKEN, process.env.SECRET, (err, decoded) => {
     if(err) {
       return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     }
