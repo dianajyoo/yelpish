@@ -16,10 +16,11 @@ mongoose();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use('/api/auth', registerUser);
+app.use('/api/auth', verifyUser);
+
 commentRouter(app);
 restaurantRouter(app);
 userRouter(app);
-registerUser(app);
-verifyUser(app);
 
 export default app;
