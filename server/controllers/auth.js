@@ -53,3 +53,27 @@ exports.verifyUser = (req, res) => {
     });
   });
 }
+
+exports.loginUser = (req, res) => {
+  const SECONDS_IN_A_DAY = 86400;
+
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if(err) {
+      return res.status(500).send('Server error.');
+    }
+    if(!user) {
+      return res.status(404).send('User not found.');
+    }
+
+    const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
+    if(!isPasswordValid) {
+      return res.status(401).send('Password not valid.');
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+      expiresIn: SECONDS_IN_A_DAY
+    });
+
+    res.status(200).send({ auth: true, token: token });
+  });
+}
