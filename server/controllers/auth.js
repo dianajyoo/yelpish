@@ -6,12 +6,12 @@ import User from '../models/user';
 dotenv.config();
 
 exports.registerUser = (req, res) => {
-  const HASHED_PASSWORD = bcrypt.hashSync(req.body.password, 8);
+  const HASHED_PASSWORD = bcrypt.hashSync(req.body.newPassword, 8);
   const SECONDS_IN_A_DAY = 86400;
 
   User.create({
     name: req.body.name,
-    email: req.body.email,
+    username: req.body.newUsername,
     password: HASHED_PASSWORD
   }, (err, user) => {
     if(err) {
@@ -27,7 +27,7 @@ exports.registerUser = (req, res) => {
 }
 
 exports.verifyUser = (req, res) => {
-  const TOKEN = req.headers['x-access-token'];
+  const TOKEN = req.headers.token || JSON.stringify(req.headers.token) || req.headers['x-access-token'];
 
   if(!TOKEN) {
     return res.status(401).send({ auth: false, message: 'No token provided.' });
@@ -48,7 +48,7 @@ exports.verifyUser = (req, res) => {
       if(!user) {
         return res.status(404).send('User not found.');
       }
-      
+
       res.status(200).send(user);
     });
   });
@@ -57,7 +57,7 @@ exports.verifyUser = (req, res) => {
 exports.loginUser = (req, res) => {
   const SECONDS_IN_A_DAY = 86400;
 
-  User.findOne({ email: req.body.email }, (err, user) => {
+  User.findOne({ username: req.body.username }, (err, user) => {
     if(err) {
       return res.status(500).send('Server error.');
     }
