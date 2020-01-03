@@ -1,20 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const inputStyle = {
-  height: 25,
-  width: 200,
-  borderTopLeftRadius: 8,
-  borderBottomLeftRadius: 8
-}
+const Input = styled.input`
+  width: 30%;
+  height: auto;
+  margin-right: 1.5rem;
+`
 
 const Search = ({ input, onChange }) => {
   return (
-    <input
-      style={inputStyle}
+    <Input
       type='text'
-      className='search'
       id='input'
-      value={input} 
+      value={input}
+      placeholder='What do you want to eat today?'
       onChange={onChange}
     />
   );

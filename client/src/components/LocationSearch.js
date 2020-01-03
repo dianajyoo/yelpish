@@ -1,20 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const inputStyle = {
-  height: 25,
-  width: 200,
-  borderTopRightRadius: 8,
-  borderBottomRightRadius: 8
-}
+const Input = styled.input`
+  width: 20%;
+  height: auto;
+  margin-right: 1.5rem;
+`
 
 const LocationSearch = ({ location, onChange }) => {
   return (
-    <input
-      style={inputStyle}
+    <Input
       type='text'
-      className='location'
       id='location'
-      value={location} 
+      value={location}
       onChange={onChange}
     />
   );

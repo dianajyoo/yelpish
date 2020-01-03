@@ -1,37 +1,79 @@
 import React from 'react';
+import styled from 'styled-components';
+import heart from '../images/heart.png';
 
-const divStyle = {
-  display: 'flex'
-}
+const Restaurant = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border: 0.5px solid #D1D7E0;
 
-const listStyle = {
-  display: 'table',
-  margin: '0 auto',
-  listStyleType: 'none'
-}
+  .restaurantImg {
+    width: 25%;
+    height: auto;
+    padding: 1rem;
+  }
 
-const imgStyle = {
-  marginRight: 50
-}
+  .restaurantDetails {
+    display: table;
+    margin: 0 auto;
+    list-style-type: none;
+    font: 1.5rem Lato;
+    color: #0e1111;
+    padding: 1rem;
+  }
 
-const RestaurantCard = ({ restaurant }) => {
-  const address = restaurant.venue.location.formattedAddress.map(line => {
+  .restaurantName {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .heart {
+    width: 2.5rem;
+    height: auto;
+    position: relative;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+`
+
+const RestaurantCard = ({ restaurant, photo, like }) => {
+  const address = restaurant.location.display_address.map(line => {
     return <li>{line}</li>;
   });
-  const tags = restaurant.venue.categories.map(category => {
-    return '#' + category.shortName.toLowerCase().replace(/\s/g, '');
+  const tags = restaurant.categories.map(category => {
+    return '#' + category.alias.replace(/\s/g, '');
   });
 
   return (
-    <div className='restaurantCard' style={divStyle}>
-      <img src={'https://images.unsplash.com/photo-1497515114629-f71d768fd07c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80'} alt='restaurantImage' style={imgStyle} />
+    <Restaurant>
+      <img src={photo} className='restaurantImg' alt='restaurant' />
 
-      <ul className='restaurantDetails' style={listStyle}>
-        <li>{restaurant.venue.name}</li>
+      <ul className='restaurantDetails'>
+        <li className='restaurantName'>{restaurant.name}</li>
         {address}
-        <li>{tags.length ? tags.join(', ') : tags}</li>
+
+        <br />
+
+        <li>{tags.length > 1 ? tags.join(', ') : tags}</li>
       </ul>
-    </div>
+
+      <img
+        src={heart}
+        data-id={restaurant.id}
+        data-name={restaurant.name}
+        data-photo={restaurant.image_url}
+        className='heart'
+        alt='heart'
+        onClick={like}
+      />
+    </Restaurant>
   );
 }
 

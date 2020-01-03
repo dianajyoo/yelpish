@@ -1,35 +1,30 @@
 import React from 'react';
 import RestaurantCard from './RestaurantCard';
-import '../fonts.css';
+import styled from 'styled-components';
 
-const listStyle = {
-  display: 'table',
-  margin: '0 auto',
-  listStyleType: 'none'
-}
+const List = styled.ul`
+  display: table;
+  margin: 0 auto;
+  list-style-type: none;
+  font: 2rem Lato;
 
-const childListStyle = {
-  padding: 10
-}
+  .restaurant {
+    padding: 1rem;
+  }
+`
 
-const headerStyle = {
-  fontFamily: 'Permanent Marker',
-  fontSize: 100
-}
-
-const RestaurantList = ({ restaurants }) => {
+const RestaurantList = ({ restaurants, like }) => {
   return (
     <React.Fragment>
-      <h1 style={headerStyle}>Restaurant List</h1>
-      <ul className='restaurantList' style={listStyle}>
+      <List>
         {restaurants.map(restaurant => {
           return (
-            <li key={restaurant.venue.id} style={childListStyle}>
-              <RestaurantCard restaurant={restaurant} />
+            <li key={restaurant.id} className='restaurant'>
+              <RestaurantCard restaurant={restaurant} photo={restaurant.image_url} like={like} />
             </li>
           );
         })}
-      </ul>
+      </List>
     </React.Fragment>
   );
 }
