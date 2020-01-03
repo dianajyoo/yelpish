@@ -1,5 +1,48 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
+
 .App {
   text-align: center;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+}
+
+html, body {
+  font-size: 62.5%;
+}
+
+input[type='text'], input[type='password'] {
+  background: transparent;
+  border: 0;
+  border-bottom: 0.4rem solid #F76C6C;
+  font-family: Lato, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+}
+
+input:focus {
+  border-bottom: 3px solid #F8E9A1;
+}
+
+input:focus, button:focus {
+  outline: none
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #fff;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #fff;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #fff;
+}
+
+form {
+  width: 80%;
+  height: auto;
 }
