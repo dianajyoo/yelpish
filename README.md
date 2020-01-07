@@ -12,6 +12,7 @@ Visit https://yelpish.herokuapp.com!
 * Yelp API
 * MapQuest API
 * MDN's Geolocation API
+* styled-components library for handling CSS-in-JS
 
 ### Back End
 * Node.js 
