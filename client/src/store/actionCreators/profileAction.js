@@ -23,7 +23,7 @@ export const resetFavorites = (favorites) => {
 
 export const getFavorites = () => {
   return (dispatch) => {
-    const URL = 'https://fooder-server.herokuapp.com/favorites';
+    const URL = 'https://yelpish-backend.herokuapp.com/favorites';
 
     axios({
       method: 'GET',
@@ -43,7 +43,7 @@ export const getFavorites = () => {
 
 export const addFavorites = (name, photo, restaurant_id, user_id) => {
   return (dispatch) => {
-    const URL = 'https://fooder-server.herokuapp.com/favorites';
+    const URL = 'https://yelpish-backend.herokuapp.com/favorites';
 
     axios({
       method: 'POST',

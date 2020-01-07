@@ -55,7 +55,7 @@ const StyledHeader = styled.div`
 const Header = ({ loggedIn, handleLogout }) => {
   return (
     <StyledHeader>
-      <Link to='/' className='title'><h1>fooder</h1></Link>
+      <Link to='/' className='title'><h1>yelpish</h1></Link>
       {!loggedIn ? (
         <div className='account'>
           <Link className='control' to='/account'>

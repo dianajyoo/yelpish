@@ -39,7 +39,7 @@ export const logoutUser = (loggedIn, user, token) => {
 
 export const login = (username, password) => {
   return (dispatch) => {
-    const URL = 'https://fooder-server.herokuapp.com/api/auth/login';
+    const URL = 'https://yelpish-backend.herokuapp.com/api/auth/login';
 
     axios({
       method: 'POST',
@@ -64,7 +64,7 @@ export const login = (username, password) => {
 
 export const register = (name, newUsername, newPassword) => {
   return (dispatch) => {
-    const URL = 'https://fooder-server.herokuapp.com/api/auth/register';
+    const URL = 'https://yelpish-backend.herokuapp.com/api/auth/register';
 
     axios({
       method: 'POST',
@@ -90,7 +90,7 @@ export const register = (name, newUsername, newPassword) => {
 
 export const verify = (token) => {
   return (dispatch) => {
-    const URL = 'https://fooder-server.herokuapp.com/api/auth/verify';
+    const URL = 'https://yelpish-backend.herokuapp.com/api/auth/verify';
 
     axios({
       method: 'GET',
