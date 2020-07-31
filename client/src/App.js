@@ -2,9 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { logout } from './store/actionCreators/authAction';
-import { addFavorites, resetFavoritesAfterLogout } from './store/actionCreators/profileAction';
+import {
+  addFavorites,
+  resetFavoritesAfterLogout,
+} from './store/actionCreators/profileAction';
 
-import SearchContainer from './containers/SearchContainer';
+import Landing from './components/landing/landing_container';
+
 import RestaurantContainer from './containers/RestaurantContainer';
 import AccountContainer from './containers/AccountContainer';
 import ProfileContainer from './containers/ProfileContainer';
@@ -17,7 +21,7 @@ class App extends React.Component {
     // we reset all states once user logs out
     logout();
     resetFavoritesAfterLogout();
-  }
+  };
 
   addToFavorites = (e) => {
     const { addFavorites, loggedIn } = this.props;
@@ -33,16 +37,17 @@ class App extends React.Component {
     } else {
       alert('Please sign in before liking!');
     }
-  }
+  };
 
   render() {
     return (
       <Router>
         <div className='App'>
           <Switch>
-            <Route exact path='/' render={(props) => <SearchContainer {...props} />} />
+            <Route exact path='/' render={(props) => <Landing {...props} />} />
             <Route
-              exact path='/search'
+              exact
+              path='/search'
               render={(props) => (
                 <RestaurantContainer
                   {...props}
@@ -52,38 +57,38 @@ class App extends React.Component {
               )}
             />
             <Route
-              exact path='/account'
+              exact
+              path='/account'
               render={(props) => (
                 <AccountContainer {...props} handleLogout={this.handleLogout} />
               )}
             />
             <Route
-              exact path='/profile'
+              exact
+              path='/profile'
               render={(props) => (
-                <ProfileContainer
-                  {...props}
-                  handleLogout={this.handleLogout}
-                />
+                <ProfileContainer {...props} handleLogout={this.handleLogout} />
               )}
             />
           </Switch>
         </div>
       </Router>
     );
-  };
-};
+  }
+}
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.auth.loggedIn
+    loggedIn: state.auth.loggedIn,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
-    addFavorites: (name, photo, restaurant_id, user_id) => dispatch(addFavorites(name, photo, restaurant_id, user_id)),
-    resetFavoritesAfterLogout: () => dispatch(resetFavoritesAfterLogout())
+    addFavorites: (name, photo, restaurant_id, user_id) =>
+      dispatch(addFavorites(name, photo, restaurant_id, user_id)),
+    resetFavoritesAfterLogout: () => dispatch(resetFavoritesAfterLogout()),
   };
 };
 
