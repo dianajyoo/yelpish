@@ -23,7 +23,7 @@ export const resetFavorites = (favorites) => {
 
 export const getAll = (id) => {
   return (dispatch) => {
-    const url = 'https://yelpish-backend.herokuapp.com/favorites';
+    const url = '/api/favorites';
     // const url = 'http://localhost:3000/favorites';
 
     axios({
@@ -33,9 +33,7 @@ export const getAll = (id) => {
     })
       .then((res) => {
         const favorites = res.data;
-        console.log('fsvorites', favorites);
         const userFavorites = favorites.filter((fave) => fave.user_id === id);
-        console.log('userfaves', userFavorites);
 
         dispatch(getFavorites(userFavorites[0].restaurants));
       })
@@ -45,7 +43,7 @@ export const getAll = (id) => {
 
 export const update = (name, photo, restaurant_id, user_id) => {
   return (dispatch) => {
-    const url = 'https://yelpish-backend.herokuapp.com/favorites';
+    const url = '/api/favorites';
     // const url = 'http://localhost:3000/favorites';
 
     axios({

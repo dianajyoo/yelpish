@@ -17,12 +17,6 @@ export const getRestaurants = (restaurants, radius, price, page) => {
   };
 };
 
-export const setQuery = (query) => {
-  return (dispatch) => {
-    dispatch(getQuery(query));
-  };
-};
-
 export const findRestaurants = (
   latitude,
   longitude,

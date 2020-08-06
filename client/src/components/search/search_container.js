@@ -3,7 +3,6 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { findRestaurants } from './actions/search_actions';
 import { update } from '../profile/actions/profile_actions';
-import { verify } from '../../store/actionCreators/authAction';
 
 import Nav from '../navbar/Nav';
 import Facet from '../facets/Facet';
@@ -156,7 +155,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         findRestaurants(latitude, longitude, query, radius, price, page)
       ),
-    verify: (token) => dispatch(verify(token)),
     update: (name, photo, restaurantID, userID) =>
       dispatch(update(name, photo, restaurantID, userID)),
   };
