@@ -63,8 +63,8 @@ export const logoutUser = () => {
 export const login = (username, password) => {
   return async (dispatch) => {
     console.log('Logging in...');
-    // const URL = 'https://yelpish-backend.herokuapp.com/api/auth/login';
-    const url = 'http://localhost:3000/api/auth/login';
+    const url = 'https://yelpish-backend.herokuapp.com/api/auth/login';
+    // const url = 'http://localhost:3000/api/auth/login';
     const data = { username, password };
 
     axios({
@@ -90,9 +90,9 @@ export const login = (username, password) => {
 export const register = (name, username, password) => {
   return async (dispatch) => {
     console.log('Registering...');
-    const url = 'http://localhost:3000/api/auth/register';
+    // const url = 'http://localhost:3000/api/auth/register';
     const data = { name, username, password };
-    // const URL = 'https://yelpish-backend.herokuapp.com/api/auth/register';
+    const url = 'https://yelpish-backend.herokuapp.com/api/auth/register';
 
     axios({
       url,
@@ -117,8 +117,8 @@ export const register = (name, username, password) => {
 export const verify = (token) => {
   return async (dispatch) => {
     console.log('Verifying...');
-    // const URL = 'https://yelpish-backend.herokuapp.com/api/auth/verify';
-    const URL = 'http://localhost:3000/api/auth/verify';
+    const URL = 'https://yelpish-backend.herokuapp.com/api/auth/verify';
+    // const URL = 'http://localhost:3000/api/auth/verify';
 
     axios
       .get(URL, {
