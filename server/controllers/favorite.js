@@ -1,30 +1,31 @@
-import favorite from '../models/favorite';
+import Favorite from '../models/favorite';
 
 exports.getFavorites = (req, res) => {
-  favorite.find({}, (err, favorites) => {
-    if(err) {
+  Favorite.find({}, (err, favorites) => {
+    if (err) {
       res.send(err);
     }
 
     res.json(favorites);
   });
-}
+};
 
 exports.addFavorite = (req, res) => {
-  const newFavorite = new favorite(req.body);
-  const user_id = newFavorite.user_id;
-  const restaurant = newFavorite.restaurants[0];
+  const favorite = new Favorite(req.body);
+  const user_id = favorite.user_id;
+  const restaurant = favorite.restaurants[0];
+  // const { name, photo, restaurant_id } = restaurant;
 
-  favorite.findOneAndUpdate(
-    {user_id},
-    {$push: {restaurants: restaurant}},
-    {safe: true, upsert: true, new: true},
-    (err, favorite) => {
-      if(err) {
+  Favorite.findOneAndUpdate(
+    { user_id },
+    { $addToSet: { restaurants: restaurant } },
+    { safe: true, upsert: true, new: true },
+    (err, result) => {
+      if (err) {
         res.send(err);
       }
 
-      res.json(favorite);
+      res.json(result);
     }
   );
-}
+};

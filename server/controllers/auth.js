@@ -5,75 +5,71 @@ import User from '../models/user';
 
 dotenv.config();
 
-exports.registerUser = (req, res) => {
-  const HASHED_PASSWORD = bcrypt.hashSync(req.body.newPassword, 8);
-  const SECONDS_IN_A_DAY = 86400;
+exports.registerUser = async (req, res) => {
+  const { name, username, password } = req.body;
+  const HASHED_PASSWORD = bcrypt.hashSync(password, 8);
+  const SECONDS_IN_HOUR = 3600;
 
-  User.create({
-    name: req.body.name,
-    username: req.body.newUsername,
-    password: HASHED_PASSWORD
-  }, (err, user) => {
-    if(err) {
-      return res.status(500).send('There was a problem with registering user.');
-    }
-
-    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
-      expiresIn: SECONDS_IN_A_DAY
-    });
-
-    res.status(200).send({ auth: true, token: token });
-  });
-}
-
-exports.verifyUser = (req, res) => {
-  const TOKEN = req.headers.token || JSON.stringify(req.headers.token) || req.headers['x-access-token'];
-
-  if(!TOKEN) {
-    return res.status(401).send({ auth: false, message: 'No token provided.' });
-  }
-  
-  jwt.verify(TOKEN, process.env.SECRET, (err, decoded) => {
-    if(err) {
-      return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    }
-    
-    User.findById(decoded.id, (err, user) => {
-      // omit password from being returned at endpoint
-      { password: 0 }
-
-      if(err) {
-        return res.status(500).send('Cannot find user.');
-      } 
-      if(!user) {
-        return res.status(404).send('User not found.');
+  User.create(
+    {
+      name,
+      username,
+      password: HASHED_PASSWORD,
+    },
+    (err, user) => {
+      if (err) {
+        return res.status(500).send('Internal server error.');
       }
 
-      res.status(200).send(user);
-    });
-  });
-}
+      if (!user) {
+        return res
+          .status(404)
+          .send('Cannot register at this time. Try again later.');
+      }
 
-exports.loginUser = (req, res) => {
-  const SECONDS_IN_A_DAY = 86400;
+      const token = jwt.sign({ id: user.id }, process.env.SECRET, {
+        expiresIn: SECONDS_IN_HOUR,
+      });
 
-  User.findOne({ username: req.body.username }, (err, user) => {
-    if(err) {
-      return res.status(500).send('Server error.');
+      return res.status(200).send({ success: true, token, user });
     }
-    if(!user) {
+  );
+};
+
+exports.loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  const SECONDS_IN_HOUR = 3600;
+
+  User.findOne({ username }, (err, user) => {
+    if (err) {
+      console.log('Cannot log in user.', err);
+      return res.status(500).send('Internal server error.');
+    }
+
+    if (!user) {
       return res.status(404).send('User not found.');
     }
 
-    const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
-    if(!isPasswordValid) {
-      return res.status(401).send('Password not valid.');
+    const isValid = bcrypt.compareSync(password, user.password);
+
+    if (!isValid) {
+      return res.status(401).send('Incorrect password.');
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
-      expiresIn: SECONDS_IN_A_DAY
+    const token = jwt.sign({ id: user.id }, process.env.SECRET, {
+      expiresIn: SECONDS_IN_HOUR,
     });
 
-    res.status(200).send({ auth: true, token: token });
+    return res.status(200).send({ success: true, token, user });
   });
-}
+};
+
+exports.verifyUser = (req, res) => {
+  const { token, userID } = req;
+
+  if (!token && !userID) {
+    return res.status(401).send({ success: false, message: 'Not authorized.' });
+  }
+
+  return res.status(200).json({ success: true, token, userID });
+};
