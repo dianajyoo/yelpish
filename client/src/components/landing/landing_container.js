@@ -5,30 +5,25 @@ import { Main, Wrapper, FormWrapper, Title, Hero } from './styles';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { getGeoLocation } from './actions/location_action';
+import { getGeoLocation } from './actions/location_actions';
 import { setQuery } from '../../store/actionCreators/searchAction';
 
-const Landing = (props) => {
+const Landing = ({ latitude, longitude, getGeoLocation, history }) => {
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('');
 
   useEffect(() => {
-    console.log('Mount');
-    const { getGeoLocation } = props;
-
     getGeoLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => getLocation(), [location]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('query', query);
-
-    const { setQuery, history } = props;
     setQuery(query);
-
     history.push('/search');
     reset();
   };
@@ -36,8 +31,6 @@ const Landing = (props) => {
   const reset = () => setQuery('');
 
   const getLocation = () => {
-    const { latitude, longitude } = props;
-
     const URL = `https://www.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOCODE_API_KEY}&location=${latitude},${longitude}`;
 
     fetch(URL)
@@ -58,6 +51,7 @@ const Landing = (props) => {
           <Title>yelp•ish</Title>
           <Form onSubmit={handleSubmit}>
             <Input
+              className='input--mr'
               placeholder='Search'
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -67,7 +61,7 @@ const Landing = (props) => {
               value={location}
               onChange={getLocation}
             />
-            <Button type='submit' />
+            <Button type='submit' className='btn--hide' />
           </Form>
         </FormWrapper>
       </Wrapper>

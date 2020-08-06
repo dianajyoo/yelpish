@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import image from '../../images/mae-mu-8Vh6ulKc50o.jpg';
 
 export const Main = styled.div`
-  height: 100%;
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,8 +11,9 @@ export const Main = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  height: 80%;
   width: 80%;
+  height: 80%;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,8 +34,8 @@ export const FormWrapper = styled.div`
 `;
 
 export const Hero = styled.div`
-  height: 100%;
   width: 80%;
+  height: 100%;
   background: url(${image});
   background-size: cover;
   background-repeat: no-repeat;
