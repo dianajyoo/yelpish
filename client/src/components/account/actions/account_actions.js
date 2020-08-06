@@ -63,7 +63,7 @@ export const logoutUser = () => {
 export const login = (username, password) => {
   return async (dispatch) => {
     console.log('Logging in...');
-    const url = 'https://yelpish-backend.herokuapp.com/api/auth/login';
+    const url = '/api/auth/login';
     // const url = 'http://localhost:3000/api/auth/login';
     const data = { username, password };
 
@@ -92,7 +92,7 @@ export const register = (name, username, password) => {
     console.log('Registering...');
     // const url = 'http://localhost:3000/api/auth/register';
     const data = { name, username, password };
-    const url = 'https://yelpish-backend.herokuapp.com/api/auth/register';
+    const url = '/api/auth/register';
 
     axios({
       url,
@@ -117,7 +117,7 @@ export const register = (name, username, password) => {
 export const verify = (token) => {
   return async (dispatch) => {
     console.log('Verifying...');
-    const URL = 'https://yelpish-backend.herokuapp.com/api/auth/verify';
+    const URL = '/api/auth/verify';
     // const URL = 'http://localhost:3000/api/auth/verify';
 
     axios

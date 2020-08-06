@@ -6,9 +6,15 @@ import { Main, Wrapper, FormWrapper, Title, Hero } from './styles';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { getGeoLocation } from './actions/location_actions';
-import { setQuery } from '../../store/actionCreators/searchAction';
+import { getQuery } from '../search/actions/search_actions';
 
-const Landing = ({ latitude, longitude, getGeoLocation, history }) => {
+const Landing = ({
+  latitude,
+  longitude,
+  getGeoLocation,
+  getQuery,
+  history,
+}) => {
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('');
 
@@ -23,7 +29,7 @@ const Landing = ({ latitude, longitude, getGeoLocation, history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setQuery(query);
+    getQuery(query);
     history.push('/search');
     reset();
   };
@@ -79,7 +85,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getGeoLocation: () => dispatch(getGeoLocation()),
-    setQuery: (query) => dispatch(setQuery(query)),
+    getQuery: (query) => dispatch(getQuery(query)),
   };
 };
 
