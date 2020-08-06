@@ -1,95 +1,71 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { logout } from './store/actionCreators/authAction';
-import {
-  addFavorites,
-  resetFavoritesAfterLogout,
-} from './store/actionCreators/profileAction';
+import { withRouter } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
+import { reset } from './components/profile/actions/profile_actions';
+import { logout } from './components/account/actions/account_actions';
 
 import Landing from './components/landing/landing_container';
+import Search from './components/search/search_container';
+import Account from './components/account/account_container';
+import Profile from './components/profile/profile_container';
+import Loader from './components/loader/loader';
 
-import RestaurantContainer from './containers/RestaurantContainer';
-import AccountContainer from './containers/AccountContainer';
-import ProfileContainer from './containers/ProfileContainer';
 import './App.css';
 
-class App extends React.Component {
-  handleLogout = () => {
-    const { logout, resetFavoritesAfterLogout } = this.props;
+const App = (props) => {
+  const logoutUser = () => {
+    const { logout, reset } = props;
 
-    // we reset all states once user logs out
+    // We reset all states once user logs out
+    reset();
     logout();
-    resetFavoritesAfterLogout();
   };
 
-  addToFavorites = (e) => {
-    const { addFavorites, loggedIn } = this.props;
-    const name = e.target.dataset.name;
-    const photo = e.target.dataset.photo;
-    const restaurant_id = e.target.dataset.id;
-    const user_id = localStorage.getItem('id');
+  if (props.loading === true) return <Loader />;
 
-    // update favorites state with new set of favorites if logged in
-    if (loggedIn === true) {
-      addFavorites(name, photo, restaurant_id, user_id);
-      alert('Restaurant liked!');
-    } else {
-      alert('Please sign in before liking!');
-    }
-  };
-
-  render() {
+  if (!props.loggedIn || props.loading === false)
     return (
-      <Router>
-        <div className='App'>
-          <Switch>
-            <Route exact path='/' render={(props) => <Landing {...props} />} />
-            <Route
-              exact
-              path='/search'
-              render={(props) => (
-                <RestaurantContainer
-                  {...props}
-                  handleLogout={this.handleLogout}
-                  like={this.addToFavorites}
-                />
-              )}
-            />
-            <Route
-              exact
-              path='/account'
-              render={(props) => (
-                <AccountContainer {...props} handleLogout={this.handleLogout} />
-              )}
-            />
-            <Route
-              exact
-              path='/profile'
-              render={(props) => (
-                <ProfileContainer {...props} handleLogout={this.handleLogout} />
-              )}
-            />
-          </Switch>
-        </div>
-      </Router>
+      <div className='App'>
+        <Switch>
+          <Route exact path='/' render={(props) => <Landing {...props} />} />
+          <Route
+            exact
+            path='/search'
+            render={(props) => <Search {...props} logout={logoutUser} />}
+          />
+          <Route
+            exact
+            path='/account'
+            render={(props) => <Account {...props} logout={logoutUser} />}
+          />
+          <Route
+            exact
+            path='/profile'
+            render={(props) => <Profile {...props} logout={logoutUser} />}
+          />
+        </Switch>
+      </div>
     );
-  }
-}
+  else return null;
+};
 
 const mapStateToProps = (state) => {
   return {
+    loading: state.auth.loading,
+    success: state.auth.success,
     loggedIn: state.auth.loggedIn,
+    authorized: state.auth.authorized,
+    token: state.auth.token,
+    user: state.auth.user,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    reset: () => dispatch(reset()),
     logout: () => dispatch(logout()),
-    addFavorites: (name, photo, restaurant_id, user_id) =>
-      dispatch(addFavorites(name, photo, restaurant_id, user_id)),
-    resetFavoritesAfterLogout: () => dispatch(resetFavoritesAfterLogout()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
